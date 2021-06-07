@@ -1,7 +1,17 @@
-[
+{
+  "dbNotes": [
+    3,
     {
-        "title":"Test Title",
-        "text":"Test text"
+      "notes": "testNote",
+      "id": 0
+    },
+    {
+      "notes": "testNote",
+      "id": 1
+    },
+    {
+      "notes": "testNote",
+      "id": 2
     }
-
-]
+  ]
+}
