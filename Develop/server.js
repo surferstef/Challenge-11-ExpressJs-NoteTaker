@@ -10,14 +10,25 @@ const app = express();
 
 const { dbNotes } = require('./db/db.json');
 
-// get results
+// get results from db json file
 app.get('/api/notes', (req, res) => {
   let results = dbNotes;
   res.json(dbNotes);
 });
 
+// Create route to get notes.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/notes.html'));
+});
+
+// Create route to get index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+// Validate notes function to make sure data from req.body exists and is the right type of data
 function validateNotes(dbNotes) {
-  if (!dbNotes|| !Array.isArray(dbNotes)) {
+  if (!dbNotes || !Array.isArray(dbNotes)) {
     return false;
   }
 }
@@ -26,18 +37,8 @@ function validateNotes(dbNotes) {
 function createNewNote(body, notesArray) {
   const addNote = body;
 
-  // if (!Array.isArray(notesArray))
-  // notesArray = [];
-
-  // if (!dbNotes|| !Array.isArray(dbNotes)) {
-  //   return false;
-  // }
-
 if (notesArray.length === 0)
   notesArray.push(0);
-
-body.id = notesArray[0];
-notesArray[0]++;
 
   notesArray.push(addNote);
 
@@ -46,18 +47,13 @@ notesArray[0]++;
         JSON.stringify({ dbNotes: notesArray }, null, 2)
   );
   return addNote;
-//  console.log(body);
-//our function's main code will go here
-
-//return finished code to post route for response
-//  return body;
 
 } 
 app.post('/api/notes', (req, res) => {
 // set id based on what the next index of the array will be
-//req.body.id = animals.length.toString();
+req.body.id = dbNotes.length.toString();
 
-// add animal to json file and animals array in this function
+// add note to json file and notes array in this function
 if (validateNotes(req.body)) {
     res.status(400).send('The notes are not properly formatted.');
 }
@@ -65,17 +61,8 @@ else {
   const addNote = createNewNote(req.body, dbNotes);
   res.json(addNote);
 }
-
-// console.log(req.body);
-// res.json(req.body);
 });
 
-
-// app.get('/api/animals', (req, res) => {
-//     let results = animals;
-//     console.log(req.query)
-//     res.json(results);
-//   });
 
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
