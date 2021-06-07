@@ -13,7 +13,7 @@ const { dbNotes } = require('./db/db.json');
 // get results from db json file
 app.get('/api/notes', (req, res) => {
   let results = dbNotes;
-  res.json(dbNotes);
+  res.json(results);
 });
 
 
