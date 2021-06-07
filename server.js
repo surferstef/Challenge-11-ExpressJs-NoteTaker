@@ -16,14 +16,19 @@ app.get('/api/notes', (req, res) => {
   res.json(dbNotes);
 });
 
-// Create route to get notes.html
+
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './public/notes.html'));
+  res.sendFile(path.join(__dirname, '/public/index.html'));
+});
+
+// get notes
+app.get('/notes', (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
 
 // Create route to get index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, './public/index.html'));
+  res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
 // Validate notes function to make sure data from req.body exists and is the right type of data
